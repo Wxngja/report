@@ -8,6 +8,7 @@ use pocketmine\event\Listener;
 use pocketmine\Player;
 use report\commands\Report;
 class Main extends PluginBase implements Listener{
+ CONST  $prefix = TF::BLACK . "[" . TF::RED . "Report" . TF::BLACK . "]" . TF::WHITE." ";
 
     public function onEnable()
     {
