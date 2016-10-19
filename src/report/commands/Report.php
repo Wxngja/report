@@ -35,18 +35,15 @@ class Report extends ReportTask
 				$p->sendMessage(Main::prefix . TF::GREEN . "Invalid Player!");
 			}
 			if (isset($args[1]) && strtolower($args[1]) == "") {
-				$p = $sender;
-				$p->sendMessage(Main::prefix . TF::GREEN . "Invalid message!");
+				$sender->sendMessage(Main::prefix . TF::GREEN . "Invalid message!");
 			}
 			if (isset($args[1]) && strtolower($args[1]) == "" && isset($args[0]) && strtolower($args[0]) == "") {
-				$p = $sender;
-				$p->sendMessage(Main::prefix . TF::GREEN . "Report failed...!");
+				$sender->sendMessage(Main::prefix . TF::GREEN . "Report failed...!");
 			}
 			$target = $this->plugin->getServer()->getPlayer($args[0]);
 			if ($target instanceof Player) {
 				if ($target == null) {
-					$p = $sender;
-					$p->sendMessage(Main::prefix . TF::RED . "ERROR: Target not found!");
+					$sender->sendMessage(Main::prefix . TF::RED . "ERROR: Target not found!");
 				}
 				$sender->sendMessage(Main::prefix . TF::RED . " Successfully reported " . TF::GREEN . $target->getName() . TF::RED . " for " . implode(" ", $args));
 				foreach ($this->plugin->getServer()->getOnlinePlayers() as $pl) {
