@@ -9,20 +9,16 @@ use report\tasks\ReportTask;
 class Report extends ReportTask
 {
 	private $plugin;
-
 	public function __construct(Main $plugin)
 	{
 		$this->plugin = $plugin;
 		parent::__construct($plugin, "report", "Report a player!", "/report <player> <..> ", "r");
 	}
-
 	public function getPlugin()
 	{
 		return $this->plugin;
 	}
-
 	public $report;
-
 	public function execute(CommandSender $sender, $commandLabel, array $args)
 	{
 		if ($sender instanceof Player) {
@@ -40,17 +36,14 @@ class Report extends ReportTask
 			if (isset($args[1]) && strtolower($args[1]) == "" && isset($args[0]) && strtolower($args[0]) == "") {
 				$sender->sendMessage(Main::prefix . TF::GREEN . "Report failed...!");
 			}
-			$target = $this->plugin->getServer()->getPlayer($args[0]);
+			$target = $this->plugin->getServer()->getOfflinePlayer($args[0]);
 			if ($target instanceof Player) {
-				if ($target == null) {
-					$sender->sendMessage(Main::prefix . TF::RED . "ERROR: Target not found!");
-				}
 				$sender->sendMessage(Main::prefix . TF::RED . " Successfully reported " . TF::GREEN . $target->getName() . TF::RED . " for " . implode(" ", $args));
 				foreach ($this->plugin->getServer()->getOnlinePlayers() as $pl) {
 					if ($pl->hasPermission("report.bypass")) {
 						$pl->sendMessage(Main::prefix . TF::BLUE . "Report : " . TF::RED . $sender->getName() . " - " . TF::BLUE . $args);
 						$this->report->set("Report", $args);
-					} else {
+							} else {
 						$sender->sendMessage(Main::prefix . TF::RED . "Failed to report message as no operators are online!");
 					}
 				}
