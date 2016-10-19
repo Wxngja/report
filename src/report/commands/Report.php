@@ -6,8 +6,8 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\Player;
 use report\commands\Report;
-use report\tasks\ReportListener;
-class Report extends ReportListener {
+use report\tasks\ReportTask;
+class Report extends ReportTask {
 	private $plugin;
 	public function __construct(Main $plugin) {
         $this->plugin = $plugin;
