@@ -27,8 +27,7 @@ class Report extends ReportTask
 				$sender->sendMessage(Main::prefix . TF::RED . $this->usageMessage);
 			}
 			if (isset($args[0]) && strtolower($args[0]) == "") {
-				$p = $sender;
-				$p->sendMessage(Main::prefix . TF::GREEN . "Invalid Player!");
+				$sender->sendMessage(Main::prefix . TF::GREEN . "Invalid Player!");
 			}
 			if (isset($args[1]) && strtolower($args[1]) == "") {
 				$sender->sendMessage(Main::prefix . TF::GREEN . "Invalid message!");
