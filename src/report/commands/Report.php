@@ -42,6 +42,7 @@ class Report extends ReportTask
 					if ($pl->hasPermission("report.bypass")) {
 						$pl->sendMessage(Main::prefix . TF::BLUE . "Report : " . TF::RED . $sender->getName() . " - " . TF::BLUE . $args);
 						$this->report->set("Report", $args);
+                                                $this->report->save();
 							} else {
 						$sender->sendMessage(Main::prefix . TF::RED . "Failed to report message as no operators are online!");
 					}
