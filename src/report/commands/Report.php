@@ -9,6 +9,7 @@ use report\tasks\ReportTask;
 class Report extends ReportTask
 {
 	private $plugin;
+	public $report;
 	public function __construct(Main $plugin)
 	{
 		$this->plugin = $plugin;
@@ -18,16 +19,15 @@ class Report extends ReportTask
 	{
 		return $this->plugin;
 	}
-	public $report;
-	public function execute(CommandSender $sender, $commandLabel, array $args)
-	{
+	public function execute(CommandSender $sender, $commandLabel, array $args){
 		if ($sender instanceof Player) {
 			$this->report = new Config($this->plugin->getDataFolder() . "reports/" . strtolower($sender->getName()) . "__report.yml", Config::YAML);
 			if (count($args) === 0) {
 				$sender->sendMessage(Main::prefix . TF::RED . $this->usageMessage);
 			}
 			if (isset($args[0]) && strtolower($args[0]) == "") {
-				$sender->sendMessage(Main::prefix . TF::GREEN . "Invalid Player!");
+				$p = $sender;
+				$p->sendMessage(Main::prefix . TF::GREEN . "Invalid Player!");
 			}
 			if (isset($args[1]) && strtolower($args[1]) == "") {
 				$sender->sendMessage(Main::prefix . TF::GREEN . "Invalid message!");
@@ -40,14 +40,18 @@ class Report extends ReportTask
 				$sender->sendMessage(Main::prefix . TF::RED . " Successfully reported " . TF::GREEN . $target->getName() . TF::RED . " for " . implode(" ", $args));
 				foreach ($this->plugin->getServer()->getOnlinePlayers() as $pl) {
 					if ($pl->hasPermission("report.bypass")) {
-						$pl->sendMessage(Main::prefix . TF::BLUE . "Report : " . TF::RED . $sender->getName() . " - " . TF::BLUE . $args);
-						$this->report->set("Report", $args);
-                                                $this->report->save();
+						$pl->sendMessage(Main::prefix . TF::BLUE . "Report : " . TF::RED . $sender->getName() . " - " . TF::BLUE . implode(" ", $args));
+					$this->report->set("Report", $args);
+						$this->report->save();
 							} else {
 						$sender->sendMessage(Main::prefix . TF::RED . "Failed to report message as no operators are online!");
 					}
-				}
+				   }
+
 			}
+		} else {
+			$sender->sendMessage("Run this command in-game");
 		}
 	}
+	
 }
